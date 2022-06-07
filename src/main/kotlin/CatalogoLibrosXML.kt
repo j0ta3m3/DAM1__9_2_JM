@@ -1,30 +1,36 @@
-package un6.eje6_5
-
 import mu.KotlinLogging
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
+import un6.eje6_5.AccederLibros
+import un6.eje6_5.BooksDAO
+import un6.eje6_5.ConnectionBuilder
+import un6.eje6_5.Libro
 import java.io.File
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import javax.xml.parsers.DocumentBuilderFactory
 
-class CatalogoLibrosXML(private val cargador: String):AccederLibros {
+
+class CatalogoLibrosXML(private val cargador: String) : AccederLibros {
 
     companion object {
         val l = KotlinLogging.logger("LOG")
     }
-    internal fun i(msg:String)
-    {
-        CatalogoLibrosXML.l.info { msg }
+
+    internal fun i(msg: String) {
+        l.info { msg }
     }
+
     private var xmlDoc: Document? = null
+
     init {
         try {
             xmlDoc = readXml(cargador)
             xmlDoc?.let { it.documentElement.normalize() }
         } catch (e: Exception) {
-            requireNotNull(xmlDoc , { e.message.toString() })
+            requireNotNull(xmlDoc, { e.message.toString() })
         }
     }
 
@@ -107,15 +113,4 @@ class CatalogoLibrosXML(private val cargador: String):AccederLibros {
         return m
     }
 
-}
-
-fun main() {
-    var portatil = "/home/edu/IdeaProjects/IESRA-DAM-Prog/ejercicios/src/main/kotlin/un5/eje5_4/Catalog.xml"
-    var casa =
-        "/home/usuario/Documentos/workspace/IdeaProjects/IESRA-DAM/ejercicios/src/main/kotlin/un5/eje5_4/Catalog.xml"
-    var jm = "C:\\Users\\JMSJ\\IntelliJIDEAProjects\\6_5\\src\\main\\kotlin\\un6\\eje6_5\\Catalog.xml"
-    var cat = CatalogoLibrosXML(jm)
-    var id = "bk105"
-    cat.i(cat.existeLibro(id).toString())
-    cat.i(cat.infoLibro(id).toString())
 }

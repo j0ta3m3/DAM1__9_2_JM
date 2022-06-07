@@ -1,5 +1,6 @@
 package un6.eje6_5
 
+import mu.KotlinLogging
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
@@ -54,7 +55,7 @@ class BooksDAO(private val c: Connection) {
                     "publish_date DATE ,\n" +
                     "description VARCHAR(250)," +
                     "PRIMARY KEY (id))"
-        private const val INSERT_BOOKS_SQL = "INSERT INTO BOOKS" + "  (author, title, genre, price, publish_date,description ) VALUES " + " (?, ?, ?, ?, ? ,?);"
+        private const val INSERT_BOOKS_SQL = "INSERT INTO BOOKS" + "  (id ,author, title, genre, price, publish_date,description ) VALUES " + " (? ,?, ?, ?, ?, ? ,?);"
         private const val SELECT_BOOK_BY_ID = "SELECT id,author, title, genre, price, publish_date,description from BOOKS where id =?"
         private const val SELECT_ALL_BOOKS = "select * from BOOKS"
         private const val DELETE_BOOKS_SQL = "delete from BOOKS where id = ?;"
@@ -149,12 +150,13 @@ class BooksDAO(private val c: Connection) {
 
         try {
             c.prepareStatement(INSERT_BOOKS_SQL).use { st ->
-                st.setString(1, book.author)
-                st.setString(2, book.title)
-                st.setString(3, book.genre)
-                st.setDouble(4, book.price)
-                st.setDate(5, sqlDate)
-                st.setString(6, book.description)
+                st.setInt(1, book.id)
+                st.setString(2, book.author)
+                st.setString(3, book.title)
+                st.setString(4, book.genre)
+                st.setDouble(5, book.price)
+                st.setDate(6, sqlDate)
+                st.setString(7, book.description)
                 println(st)
                 st.executeUpdate()
             }
@@ -244,7 +246,7 @@ class BooksDAO(private val c: Connection) {
 
 
 fun main() {
-
+/*
     val c = ConnectionBuilder()
     println("conectando.....")
 
@@ -267,6 +269,12 @@ fun main() {
                 h2DAO.insertBook(Libro("rafael", "erre", "terror", 4.4, myDate, "hghjv", id = 100))
             }
 
+           var catDb= CatalogoLibrosDB(c)
+
+           catDb.infoLibro("bk105").toString()
+
+ */
+/*
             // Buscar un libro
             var u = h2DAO.selectById(100)
 
@@ -287,5 +295,5 @@ fun main() {
     } else
         println("Conexión ERROR")
 
-
+*/
 }

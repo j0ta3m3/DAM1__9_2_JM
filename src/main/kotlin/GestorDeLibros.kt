@@ -1,5 +1,7 @@
 package un6.eje6_5
 
+import AccederLibros
+import IU
 import java.sql.DriverManager
 import java.util.logging.Level
 import java.util.logging.LogManager
@@ -8,6 +10,7 @@ import javax.swing.JOptionPane
 internal val l = LogManager.getLogManager().getLogger("").apply { level = Level.ALL }
 internal fun i(tag: String, msg: String) {
     l.info("[$tag] - $msg")
+
 }
 
 
@@ -25,19 +28,14 @@ fun main() {
 
 }
 
-interface AccederLibros {
 
-    fun infoLibro(idLibro: String): Map<String, Any>
-    fun existeLibro(idLibro: String): Boolean
-}
 
-interface IU {
 
-    fun preguntarPorUnLibro() {}
-    fun mostrarInfoDeUnLibro() {}
-}
 
 class EnglishIUT(acceso: AccederLibros) : gestionLibros(acceso) {
+
+
+
 
     override fun preguntarPorUnLibro() {
 
